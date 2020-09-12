@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" , initial-scale=1.0">
+    <title>WeatherApp</title>
+    <link rel="stylesheet" href="style_weather.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="page-first">
+        <div class="container-nav-logo row">
+            <div class="col-sm-12 col-md-3 col-lg-3 img-container">
+                <img src="assets/Logoapp.png" alt="logo_for_page" class="img-fluid">
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9 nav-container">
+                <a href="#">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+        <div class="box row">
+            <div class="search-container">
+                <input type="text" placeholder="Ex New Delhi,India" id="input-search">
+                <label for="search" class="label-search">
+                    <button class="search-icon" onclick="submit()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="page-second" id="slidingClass">
+        <div class="transparent"></div>
+        <div class="container-nav-logo row">
+            <div class="col-sm-12 col-md-3 col-lg-3 img-container">
+                <img src="../assets/Logoapp.png" alt="logo_for_page" class="img-fluid">
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9 nav-container">
+                <a class="removeDiv" href="index_weather.html">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+        <div class="box-second row">
+            <div class="col-sm-12 col-md-4 col-lg-4 icon-weather">
+                <div class="container-icon-weather">
+                    <img class="icon_to_weather" src="icons/unknown.png" /></img>
+                </div>
+                <div class="details">
+                    <div class="h2-mask">
+                        <h2 class="h2-text" id="full-address">Address</h2>
+                        <h1 class="lat">Latitude</h1>
+                        <p id="latfill"></p>
+                        <h1 class="lng">Longitude</h1>
+                        <p class="" id="lngfill"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-md-8 col-md-8 result-container">
+                <div class="item-1">
+                    <div class="small-desc">
+                        <h3 id="main-desc">Clear</h3>
+                        <h2 id="description">Clear Sky in your city</h2>
+                    </div>
+                    <div class="temp-wrap">
+                        <h2>Temperature</h2>
+                        <div class="temp">
+                            <p id="temperature">298 K</p>
+                            <p id="tempc"> 34° C</p>
+                            <p id="tempf">98° F</p>
+                        </div>
+                        <h4>Feels Like°</h4>
+                        <div class="temp">
+                            <p id="feelslike">250 K</p>
+                            <p id="feelslikec">35° C</p>
+                            <p id="feelslikef">81° F</p>
+                        </div>
+                        <h4>Min Temp</h4>
+                        <div class="temp">
+                            <p id="temperature_min">453 K</p>
+                            <p id="tempc_min">45° C</p>
+                            <p id="tempf_min">101° F</p>
+                        </div>
+                        <h4>Max Temp</h4>
+                        <div class="temp">
+                            <p id="temperature_max">250 K</p>
+                            <p id="tempc_max">35° C</p>
+                            <p id="tempf_max">81° F</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-2">
+                    <h2>Pressure</h2>
+                    <p id="pressure">23 hPa</p>
+                    <h2>Humidity</h2>
+                    <p id="humidity">43%</p>
+                    <h2>Sea Level Pressure</h2>
+                    <p id="sealevel">32 hPa</p>
+                    <h2>Ground Level</h2>
+                    <p id="groundlevel">12 hPa</p>
+                </div>
+                <div class="item-3">
+                    <img src="icons/04d.png" class="img-fluid" alt="Clouds">
+                    <div class="winddata">
+                        <h2>Wind</h2>
+                        <p id="windspeed">200m/s</p>
+                    </div>
+                    <div class="degree">
+                        <h2>Degree</h3>
+                            <p id="degree">305°</p>
+                    </div>
+                    <div class="cloudiness">
+                        <h2>Clouds</h2>
+                        <p id="cloudiness">14%</p>
+                    </div>
+                </div>
+                <div class="item-4">
+                    <div class="sun">
+                        <h2>Sunrise</h2>
+                        <p id="sunrise">12431234</p>
+                    </div>
+                    <div class="sun">
+                        <h2>Sunset</h2>
+                        <p id="sunset">123412</p>
+                    </div>
+                    <div class="sun">
+                        <h2>Visibility</h2>
+                        <p id="visibility">23424</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script defer src="script_weather.js"></script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNGo3n-OXAuOhC8J2RHJKTpqMMPnQGTQY&callback=initMap">
+        </script>
+</body>
+
+</html>
