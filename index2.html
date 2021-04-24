@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="cssnew.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Weather</title>
+</head>
+
+<body class="d-flex flex-column">
+    <section>
+        <nav class="navbar navbar-light navbar-expand-md p-2" id="mynav">
+            <a href="#" class="navbar-brand ml-1 active links">
+                <img id="logoimg" src="assets/Logoapp.png" alt="logo_for_page" class="img-fluid">
+                Weather
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar"
+                aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end mr-1" id="mynavbar">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item px-2">
+                        <a class="nav-link links" href="#">Current Weather <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link links" href="#">Forecast<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link links" href="#">Your ToDos<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link links" href="#">About us <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <section class="flex-grow-1">
+        <div class="container-fluid d-flex" id="mycontainer">
+            <div class="row myrow">
+                <div class="col-md-4 outerbox">
+                    <div class="card mycard p-3">
+                        <div class="card-header starttemp py-2 my-2">
+                            <div class="row justify-content-between" style="height: 100%;">
+                                <div class="col-12 shadowclass">
+                                    <p class="h3 font-weight-normal text-center" id="full-address">Lalitpur near najhai
+                                        bazar
+                                        lalitpur</p>
+                                    <p class="lead text-center" id="label-address">Lalitpur,India</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body middletemp shadowclass py-2 my-2">
+                            <div class="container-fluid text-center p-3" style="height: 100%;">
+                                <div>
+                                    <p class="headtemp">Temperature</p>
+                                    <div>
+                                        <img class="img-fluid icon_to_weather" src="icons/unknown.png" /></img>
+                                    </div>
+                                    <div>
+                                        <p class="display-4 font-weight-normal" id="main-desc">Clear</h3>
+                                        <p class="h5" id="description">Clear Sky in your city</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer lasttemp">
+                            <div class="row justify-content-between" style="height: 100%;">
+                                <div class="col-4 text-center shadowclass">
+                                    <p class="fontclass font-weight-normal">Temp C°</p>
+                                    <p class="py-1" id="tempc"> 34° C</p>
+                                </div>
+                                <div class="col-4 text-center shadowclass">
+                                    <p class="fontclass font-weight-normal">Temp K</p>
+                                    <p class="font-weight-normal py-1" id="temperature">298 K</p>
+                                </div>
+                                <div class="col-4 text-center shadowclass">
+                                    <p class="fontclass font-weight-normal">Temp F°</p>
+                                    <p class="py-1" id="tempf">98° F</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 outerbox d-flex flex-row flex-wrap">
+                    <div class="flexclass d-md-flex align-items-center d-block py-5">
+                        <p class="text-center text-md-left lead display-4">Weather</p>
+                        <form onsubmit="return formSubmit()" style="width: 100%;">
+                            <div class="form-group form-inline justify-content-center">
+                                <input type="text" name="search" id="search" class="form-control myinput"
+                                    placeholder="Enter your location">
+                                <label for="search">
+                                    <button class="btn" name="submit" type="submit">
+                                        <i class="fa fa-search px-4" aria-hidden="true"></i>
+                                    </button>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row flexclass">
+                        <div
+                            class="col-md-4 col-6 innerbox shadowclass text-wrap d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="fontclass">Feels Like</p>
+                                <p class="text-muted h6 font-weight-lighter">Temperature is most likely to felt in real
+                                    time.</p>
+                            </div>
+                            <div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Feels Like (K)</p>
+                                    <p class="lead" id="feelslike">250 K</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Feels like (C)</p>
+                                    <p class="lead" id="feelslikec">35° C</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Feels like (F)</p>
+                                    <p class="lead" id="feelslikef">81° F</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="col-md-4 col-6 innerbox shadowclass text-wrap  d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="fontclass">Minimum Temperature</p>
+                                <p class="text-muted h6 font-weight-lighter">Minimum temperature during the 24-hour
+                                    cycle day</p>
+                            </div>
+                            <div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Min.Temp (K)</p>
+                                    <p class="lead" id="temperature_min">453 K</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Min. Temp (C)</p>
+                                    <p class="lead" id="tempc_min">45° C</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Min. Temp (F)</p>
+                                    <p class="lead" id="tempf_min">101° F</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="col-md-4 col-6 innerbox shadowclass text-wrap  d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="fontclass">Maximum Temperature</p>
+                                <p class="text-muted h6 font-weight-lighter">Maximum temperature during the 24-hour
+                                    cycle day.</p>
+                            </div>
+                            <div class="mt-5 mt-md-4">
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Maximum Temperature (K)</p>
+                                    <p class="lead" id="temperature_max">453 K</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Maximum Temperature (C)</p>
+                                    <p class="lead" id="tempc_max">45° C</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-md-between px-2">
+                                    <p>Maximum Temperature (F)</p>
+                                    <p class="lead" id="tempf_max">101° F</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6 innerbox shadowclass  d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="fontclass">Pressure</p>
+                                <p class="text-muted h6 font-weight-lighter">Pressure recorded during the 24-hour cycle
+                                    day</p>
+                            </div>
+                            <div>
+                                <div class="d-block d-md-flex justify-content-between px-2">
+                                    <p>Humidity</p>
+                                    <p class="lead" id="pressure">23 hPa</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-between px-2">
+                                    <p>Sea Level Pressure</p>
+                                    <p class="lead" id="humidity">43%</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-between px-2">
+                                    <p>Ground Level</p>
+                                    <p class="lead" id="groundlevel">12 hPa</p>
+                                </div>
+                                <div class="d-block d-md-flex justify-content-between px-2">
+                                    <p>Sea Level</p>
+                                    <p class="lead" id="sealevel">32 hPa</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6 innerbox shadowclass  d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="fontclass">Wind Data</p>
+                                <p class="text-muted h6 font-weight-lighter">Wind Data recorded during the 24-hour
+                                    cycle
+                                    day</p>
+                            </div>
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-3">
+                                    <img src="icons/50n.png" class="img-fluid" alt="Clouds">
+                                </div>
+                                <div class="col-9">
+                                    <div class="d-flex justify-content-between">
+                                        <p>Wind</p>
+                                        <p id="windspeed">200m/s</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>Degree</p>
+                                        <p id="degree">305°</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>Clouds</p>
+                                        <p id="cloudiness">14%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6 innerbox shadowclass  d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="fontclass">More Details</p>
+                                <p class="text-muted h6 font-weight-lighter">Sunrise and sunset timing recorded for the
+                                    day.
+                                </p>
+                            </div>
+                            <div class="mt-4">
+                                <div class="d-flex justify-content-around">
+                                    <p>Sunrise</p>
+                                    <p id="sunrise">12431234</p>
+                                </div>
+                                <div class="d-flex justify-content-around">
+                                    <p>Sunset</p>
+                                    <p id="sunset">123412</p>
+                                </div>
+                                <div class="d-flex justify-content-around">
+                                    <p>Visibility</p>
+                                    <p id="visibility">23424</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="script_weather.js"></script>
+    <!-- javascript files -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

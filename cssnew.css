@@ -1,0 +1,130 @@
+*{
+    margin: 0 !important;
+    padding: 0  !important;
+    box-sizing: border-box;
+}
+
+
+body{
+    width: 100%;
+    height: 100%;
+    background: #E5E5E5;
+}
+
+a.links{
+    color: black;
+} 
+
+a.links:hover{
+    color: black !important;
+}
+
+#logoimg{
+    width: 3rem;
+    height: 3rem;
+}
+
+#mycontainer{
+    height: 100%;
+}
+
+.outerbox,.innerbox{
+    /* background-color: yellow; */
+    height: auto;
+}
+
+.myrow{
+    width: 100vw;
+}
+
+.mycard{
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.starttemp,.middletemp,.lasttemp{
+    height: auto;
+}
+
+.flexclass{
+    flex: 1 1 100%;
+}
+
+.headtemp{
+    font-size: 2rem;
+    font-weight: 300;
+}
+.fontclass{
+    font-size: 1.5rem;
+}
+
+.myinput{
+    width: 60% !important;
+    border: none;
+    background: none;
+    border-bottom: 2px solid black;
+    transition: width 0.4s ease-in-out;
+    border-radius: 0rem;
+    font-weight: 450;
+    color: black;
+}
+
+.myinput:focus,.myinput:active{
+    font-size: 1rem;
+    width: 70% !important;
+    background: none;
+    outline: none;
+    border-color: none !important;
+    box-shadow: none;
+}
+
+.shadowclass {
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12)
+  ;
+
+    padding: 0.5rem !important;
+    margin: 100px auto;
+    border-radius: 5px;
+  }
+
+  .card,.card-footer,.card-header,.card-body{
+      border: none !important;
+      outline: none;
+  }
+/* Media queries */
+@media only screen and (min-width:768px) {
+    body{
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(122.04deg, rgba(0, 0, 0, 0.6) 0%, rgba(255, 255, 255, 0.13) 91.18%);
+    }
+    .innerbox{
+        height: 30vh;
+    }
+
+    .starttemp{
+        height: 20%;
+    }
+    .middletemp{
+        height: 60%;
+    }
+    .lasttemp{
+        height: 20%;
+    }
+
+    .myinput{
+        width: 40% !important;
+    }
+
+    .myinput:focus{
+        width: 85% !important;
+    }
+}

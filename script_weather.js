@@ -1,105 +1,170 @@
+//initMap callback function
 window.initMap = function () {}
 
-function submit() {
-    slideOver();
+//api values for weather data
+const api = {
+    key: "c1a51d89a615ac435e206bcb05ec1504",
+    baseurl: "https://api.openweathermap.org/data/2.5/"
+}
+//geocoding api for lat long
+const geocodingApi = {
+    key: "33d53da926c277a6748f7344ac4b7405",
+    baseurl: "http://api.positionstack.com/v1/forward"
+}
 
-    function slideOver() {
-        let pageupper = document.querySelector('.page-second');
-        if (pageupper.classList.contains('reverse')) pageupper.classList.remove('reverse');
-        pageupper.classList.toggle('animate');
-    }
-    const removeButton = document.querySelector('.removeDiv');
-    removeButton.addEventListener('click', (evt) => {
-        let pageupper = document.querySelector('.page-second');
-        pageupper.classList.remove('animate');
-        pageupper.classList.add('reverse');
-    })
-    const api = {
-        key: "c1a51d89a615ac435e206bcb05ec1504",
-        baseurl: "https://api.openweathermap.org/data/2.5/"
-    }
-    initiate();
+var address;//store address entered
 
-    function initiate() {
-        geocoder = new google.maps.Geocoder();
-        var address = document.getElementById("input-search").value;
-        geocoder.geocode({
-            'address': address
-        }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                // icon to weather latitude and longitude ,full address from maps Javascript API 
-                const fullAddress = results[0].formatted_address;
-                const latitude = results[0].geometry.location.lat();
-                const longitude = results[0].geometry.location.lng();
-                document.getElementById('full-address').innerHTML = fullAddress;
-                document.getElementById('latfill').innerHTML = latitude;
-                document.getElementById('lngfill').innerHTML = longitude;
-                // fetch the weather API for weather data 
-                fetch(`${api.baseurl}weather?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
-                    .then(weather => {
-                        // data converted to json format
-                        return weather.json();
-                    })
-                    .then((weather) => {
-                        // setting the icon source according to the weather of the place
-                        let locationIcon = document.querySelector('.icon_to_weather');
-                        const icon = weather.weather[0].icon;
-                        locationIcon.src = `icons/${icon}.png`;
-                        // weather description of the city and short weather details
-                        document.getElementById("description").innerText = `${weather.weather[0].description} in your city`;
-                        document.getElementById("main-desc").innerText = weather.weather[0].main;
-                        // temp details of the place having the temperature, min-temperature ,max-temperature ,
-                        // feels lke in all units K ,C and Fahrenheit
-                        let temp = weather.main.temp;
-                        document.getElementById("temperature").innerText = `${temp} K`;
-                        document.getElementById("tempc").innerText = `${Math.round((temp-273.13 + Number.EPSILON) * 100) / 100} C°`;
-                        document.getElementById("tempf").innerText = `${Math.round(((((temp-273.13)*9/5)+32) + Number.EPSILON) * 100) / 100} F°`;
-                        let feels_like = weather.main.feels_like;
-                        document.getElementById("feelslike").innerText = `${feels_like} K`;
-                        document.getElementById("feelslikec").innerText = `${Math.round((feels_like-273.13 + Number.EPSILON) * 100) / 100} C°`;
-                        document.getElementById("feelslikef").innerText = `${Math.round(((((feels_like-273.13)*9/5)+32) + Number.EPSILON) * 100) / 100} F°`;
-                        let temp_min = weather.main.temp_min;
-                        document.getElementById("temperature_min").innerText = `${temp_min} K`;
-                        document.getElementById("tempc_min").innerText = `${Math.round((temp_min-273.13 + Number.EPSILON) * 100) / 100} C°`;
-                        document.getElementById("tempf_min").innerText = `${Math.round(((((temp_min-273.13)*9/5)+32) + Number.EPSILON) * 100) / 100} F°`;
-                        let temp_max = weather.main.temp_max;
-                        document.getElementById("temperature_max").innerText = `${temp_max} K`;
-                        document.getElementById("tempc_max").innerText = `${Math.round((temp_max-273.13 + Number.EPSILON) * 100) / 100} C°`;
-                        document.getElementById("tempf_max").innerText = `${Math.round(((((temp_max-273.13)*9/5)+32) + Number.EPSILON) * 100) / 100} F°`;
-                        // pressure humidity ,sealevel and groundlevel pressure values 
-                        document.getElementById("pressure").innerText = `${weather.main.pressure} hPa`;
-                        document.getElementById("humidity").innerText = `${weather.main.humidity} %`;
-                        if (weather.main.sea_level === undefined) {
-                            document.getElementById("sealevel").innerText = "-";
-                        } else {
-                            document.getElementById("sealevel").innerText = `${weather.main.sea_level} hPa`;
-                        }
-                        if (weather.main.grnd_level === undefined) {
-                            document.getElementById("groundlevel").innerText = "-";
-                        } else {
-                            document.getElementById("groundlevel").innerText = `${weather.main.grnd_level} hPa`;
-                        }
-                        // windspeed in the area degree of wind and percentage of clouds in the area
-                        document.getElementById("windspeed").innerText = `${weather.wind.speed} m/sec`;
-                        document.getElementById("degree").innerText = `${weather.wind.deg}°`;
-                        document.getElementById("cloudiness").innerText = `${weather.clouds.all} %`;
-                        // sunrise time at the place converted from UTC to normal time
-                        let sunrise_time = new Date(weather.sys.sunrise * 1000);
-                        let min = "0" + sunrise_time.getMinutes();
-                        let sec = "0" + sunrise_time.getSeconds();
-                        document.getElementById("sunrise").innerText = sunrise_time.getHours() + ":" + min.substr(-2) + ":" + sec.substr(-2);
-                        // sunset time at the place converted from UTC to normal time
-                        let sunset_time = new Date(weather.sys.sunset * 1000);
-                        let minset = "0" + sunset_time.getMinutes();
-                        let secset = "0" + sunset_time.getSeconds();
-                        document.getElementById("sunset").innerText = sunset_time.getHours() + ":" + minset.substr(-2) + ":" + secset.substr(-2);
-                        // weather area visibility in meters
-                        document.getElementById("visibility").innerText = `${weather.visibility} m`;
-                        // console.log(weather);
-                    });
-            } else {
-                alert("Geocode was not successful for the following reason: " + status);
-            }
-        });
+//call for automatic weather data
+autoShowWeather();
+
+//code for automatic location weather enable
+function autoShowWeather(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(showWeather);
     }
+
+    function showWeather(position){
+        const baseLat=position.coords.latitude;
+        const baseLong=position.coords.longitude;
+        initiate(baseLat,baseLong);
+    }
+}
+
+//function over submiting the location
+function formSubmit() {
+    //get address0
+    address = document.getElementById("search").value;
+    //console.log(address);
+    fetch(`${geocodingApi.baseurl}?access_key=${geocodingApi.key}&query=${address}`)
+        .then(jsonCreater =>{
+            return jsonCreater.json();
+        })
+        .then((geo_data) => {
+            // console.log(geo_data);
+            const latitude=geo_data["data"][0]["latitude"];
+            const longitude=geo_data["data"][0]["longitude"];
+            // console.log(`${latitude} ${longitude}`);
+            //adding the address
+            const label=geo_data["data"][0]["label"];
+            fillAddress(address,label);
+            //initiate weather process with fetched latitude and longitude
+            initiate(latitude,longitude);
+        })
+    // logic function
+    return false;
+}
+
+//base function
+function initiate(latitude,longitude){
+    fetch(`${api.baseurl}weather?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
+                .then(weather => {
+                    // weather data converted to json format 
+                    return weather.json();
+                })
+                .then((weather) => {
+                    //console.log(weather);
+                    // call for setting the icon for the weather
+                    changeIcon(weather.weather[0].icon);
+                    // call for changing weather description
+                    changeDesc(weather.weather[0]);
+                    // temp details of the place having the temperature, min-temperature ,max-temperature ,
+                    // feels lke in all units K ,C and Fahrenheit
+                    let temp = weather.main.temp;
+                    changeTemp("temperature","tempc","tempf",temp);
+                    
+                    //feels like
+                    let feels_like = weather.main.feels_like;
+                    changeTemp("feelslike","feelslikec","feelslikef",feels_like);
+                    
+                    //minimum temperature
+                    let temp_min = weather.main.temp_min;
+                    changeTemp("temperature_min","tempc_min","tempf_min",temp_min);
+
+                    //maximum temperature
+                    let temp_max = weather.main.temp_max;
+                    changeTemp("temperature_max","tempc_max","tempf_max",temp_max);
+
+                    // pressure humidity ,sealevel and groundlevel pressure values 
+                    changePressure(weather.main.pressure,weather.main.humidity);
+                    
+
+                    //sealevel and groundlevel
+                    changeLevelData(weather.main.sea_level,weather.main.grnd_level);
+
+                    // windspeed in the area degree of wind and percentage of clouds in the area
+                    changeWindData(weather.wind.speed,weather.wind.deg,weather.clouds.all);
+                    
+                    // sunrise time at the place converted from UTC to normal time
+                    let sunrise_time = new Date(weather.sys.sunrise * 1000);
+                    changeSunTime(sunrise_time,"sunrise");
+
+                    // sunset time at the place converted from UTC to normal time
+                    let sunset_time = new Date(weather.sys.sunset * 1000);
+                    changeSunTime(sunset_time,"sunset");
+
+                    // weather area visibility in meters
+                    document.getElementById("visibility").innerText = `${weather.visibility} m`;
+                });
+}
+
+
+//filling entered and labeled address
+const fillAddress = (address,label) => {
+    document.getElementById("full-address").innerHTML=address;
+    document.getElementById("label-address").innerHTML=label;
+}
+
+//filiing icon data according to weather
+const changeIcon = (icon) => {
+    let locationIcon = document.querySelector('.icon_to_weather');
+    locationIcon.src = `icons/${icon}.png`;
+}
+
+//function for changing description
+const changeDesc = (desc) => {
+    document.getElementById("description").innerText = `${desc.description} in your city`;
+    document.getElementById("main-desc").innerText = desc.main;
+}
+
+//function for changing the temp values(min,max,feelslike)
+const changeTemp =(first,second,third,temp) => {
+    //C and F temperature conversions
+    let tempC=Math.round((temp-273.13 + Number.EPSILON) * 100) / 100;
+    let tempF=Math.round(((((temp-273.13)*9/5)+32) + Number.EPSILON) * 100) / 100;
+    //fill data
+    document.getElementById(first).innerText = `${temp} K`;
+    document.getElementById(second).innerText = `${tempC} C°`;
+    document.getElementById(third).innerText = `${tempF} F°`;
+}
+
+//filling pressure and humidity
+const changePressure = (pressure, humidity) => {
+    document.getElementById("pressure").innerText = `${pressure} hPa`;
+    document.getElementById("humidity").innerText = `${humidity} %`;
+}
+
+const changeLevelData =(seaLevel,grndLevel) => {
+    if (seaLevel === undefined) {
+        document.getElementById("sealevel").innerText = "-";
+    } else {
+        document.getElementById("sealevel").innerText = `${seaLevel} hPa`;
+    }
+    if (grndLevel === undefined) {
+        document.getElementById("groundlevel").innerText = "-";
+    } else {
+        document.getElementById("groundlevel").innerText = `${grndLevel} hPa`;
+    }
+}
+
+//changinf the cloud data
+const changeWindData =(speed,deg,clouds) => {
+    document.getElementById("windspeed").innerText = `${speed} m/sec`;
+    document.getElementById("degree").innerText = `${deg}°`;
+    document.getElementById("cloudiness").innerText = `${clouds} %`;
+}
+
+const changeSunTime = (time,input_string) => {
+    let min = "0" + time.getMinutes();
+    let sec = "0" + time.getSeconds();  
+    document.getElementById(input_string).innerText = time.getHours() + ":" + min.substr(-2) + ":" + sec.substr(-2);
 }
