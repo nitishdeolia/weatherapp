@@ -1,6 +1,11 @@
 //initMap callback function
 window.initMap = function () {}
 
+//call for automatic weather data
+window.onload = function(){
+    autoShowWeather();
+}
+
 //api values for weather data
 const api = {
     key: "c1a51d89a615ac435e206bcb05ec1504",
@@ -9,14 +14,13 @@ const api = {
 //geocoding api for lat long
 const geocodingApi = {
     key: "33d53da926c277a6748f7344ac4b7405",
-    baseurl: "http://api.positionstack.com/v1/forward"
+    baseurlforward: "http://api.positionstack.com/v1/forward",
+    baseurlreverse: "https://api.positionstack.com/v1/reverse"
 }
 
 var address;//store address entered
 
-//call for automatic weather data
-autoShowWeather();
-
+// console.log(address);
 //code for automatic location weather enable
 function autoShowWeather(){
     if(navigator.geolocation){
@@ -34,13 +38,13 @@ function autoShowWeather(){
 function formSubmit() {
     //get address0
     address = document.getElementById("search").value;
-    //console.log(address);
-    fetch(`${geocodingApi.baseurl}?access_key=${geocodingApi.key}&query=${address}`)
+    // console.log(address);
+    fetch(`${geocodingApi.baseurlforward}?access_key=${geocodingApi.key}&query=${address}`)
         .then(jsonCreater =>{
             return jsonCreater.json();
         })
         .then((geo_data) => {
-            // console.log(geo_data);
+            console.log(geo_data);
             const latitude=geo_data["data"][0]["latitude"];
             const longitude=geo_data["data"][0]["longitude"];
             // console.log(`${latitude} ${longitude}`);
@@ -49,11 +53,12 @@ function formSubmit() {
             fillAddress(address,label);
             //initiate weather process with fetched latitude and longitude
             initiate(latitude,longitude);
-        })
+        });
     // logic function
     return false;
 }
 
+var temp;
 //base function
 function initiate(latitude,longitude){
     fetch(`${api.baseurl}weather?lat=${latitude}&lon=${longitude}&appid=${api.key}`)
@@ -62,7 +67,7 @@ function initiate(latitude,longitude){
                     return weather.json();
                 })
                 .then((weather) => {
-                    //console.log(weather);
+                    // console.log(weather);
                     // call for setting the icon for the weather
                     changeIcon(weather.weather[0].icon);
                     // call for changing weather description
@@ -104,9 +109,17 @@ function initiate(latitude,longitude){
 
                     // weather area visibility in meters
                     document.getElementById("visibility").innerText = `${weather.visibility} m`;
+
+                    if(address===undefined){
+                        helper(weather.name,weather.sys.country);
+                    }
                 });
 }
 
+//helper function on load
+function helper(add,lab_add){
+    fillAddress(add,lab_add);
+}
 
 //filling entered and labeled address
 const fillAddress = (address,label) => {

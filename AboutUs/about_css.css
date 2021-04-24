@@ -1,0 +1,21 @@
+*{
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(122.04deg, rgba(0, 0, 0, 0.6) 0%, rgba(255, 255, 255, 0.13) 91.18%);
+}
+
+#logoimg{
+    width: 3rem;
+    height: 3rem;
+}
+
+footer{
+    height: 20vh;
+    background-color: black;
+}
