@@ -44,7 +44,7 @@ function formSubmit() {
             return jsonCreater.json();
         })
         .then((geo_data) => {
-            console.log(geo_data);
+            //console.log(geo_data);
             const latitude=geo_data["data"][0]["latitude"];
             const longitude=geo_data["data"][0]["longitude"];
             // console.log(`${latitude} ${longitude}`);
@@ -67,7 +67,7 @@ function initiate(latitude,longitude){
                     return weather.json();
                 })
                 .then((weather) => {
-                    // console.log(weather);
+                    console.log(weather);
                     // call for setting the icon for the weather
                     changeIcon(weather.weather[0].icon);
                     // call for changing weather description
