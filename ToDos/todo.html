@@ -54,26 +54,31 @@
         <div class="container-fluid pt-5 mt-5">
             <form onsubmit="return formSubmit()">
                 <div class="form-group form-inline justify-content-center">
-                    <input type="text" name="search" id="search" class="form-control myinput"
+                    <input type="text" name="add" id="add" class="form-control myinput"
                         placeholder="Enter your todos here.." autocomplete="off">
-                    <label for="search">
+                    <label for="add" class="addlabel">
                         <button class="btn mybutton" name="submit" type="submit">
-                            <i class="fa fa-plus"></i>
+                            <i id="icon" class="fa fa-plus"></i>
                         </button>
                     </label>
                 </div>
         </div>
     </section>
-    <section>
-        <div class="container todo-container d=flex justify-content-around">
+    <section class="d-flex justify-content-center">
+        <div class="container">
             <div class="todo-list">
                 <ul>
-
+                    <li>asfas</li>
+                    <li>asdfas</li>
+                    <li>asdfasdf</li>
+                    <li>asdfasd</li>
+                    <li>sadfasdf</li>
                 </ul>
             </div>
         </div>
     </section>
-    <script src="todo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js" defer></script>
+    <script src="todo.js" defer></script>
     <!-- javascript files -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
