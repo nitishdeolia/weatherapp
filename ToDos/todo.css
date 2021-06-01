@@ -16,6 +16,31 @@ body{
     height: 3rem;
 }
 
+.jumbotext{
+    background: inherit;
+}
+
+input.myinput{
+    outline: none;
+    border: none;
+    width: 40% !important;
+    border-radius: 0rem;
+    background-color: white;
+    font-weight: 450;
+}
+
+input.myinput:focus,input.myinput:active{
+    outline: none !important;
+    border: none !important;
+    font-size: 1rem;
+    box-shadow: none !important;
+}
+
+button.mybutton{
+    width: 5rem;
+    height: 2.5rem;
+}
+
 /* Media queries */
 @media only screen and (min-width:768px) {
     body{

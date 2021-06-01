@@ -97,13 +97,14 @@
                         <form onsubmit="return formSubmit()" style="width: 100%;">
                             <div class="form-group form-inline justify-content-center">
                                 <input type="text" name="search" id="search" class="form-control myinput"
-                                    placeholder="Enter your location">
+                                    placeholder="Enter your location" autocomplete="off">
                                 <label for="search">
                                     <button class="btn" name="submit" type="submit">
                                         <i class="fa fa-search px-4" aria-hidden="true"></i>
                                     </button>
                                 </label>
                             </div>
+                            <div class="pt-3 d-flex justify-content-center mx-auto" style="width: 80%;" id="error"></div>
                         </form>
                     </div>
                     <div class="row flexclass">

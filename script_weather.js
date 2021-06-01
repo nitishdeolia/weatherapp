@@ -34,26 +34,50 @@ function autoShowWeather(){
     }
 }
 
+function addressValidation(address){
+    if(address==null || address==undefined || address==""){
+        return false;
+    }else return true;
+}
+
 //function over submiting the location
 function formSubmit() {
+
     //get address0
     address = document.getElementById("search").value;
-    // console.log(address);
-    fetch(`${geocodingApi.baseurlforward}?access_key=${geocodingApi.key}&query=${address}`)
-        .then(jsonCreater =>{
-            return jsonCreater.json();
-        })
-        .then((geo_data) => {
-            //console.log(geo_data);
-            const latitude=geo_data["data"][0]["latitude"];
-            const longitude=geo_data["data"][0]["longitude"];
-            // console.log(`${latitude} ${longitude}`);
-            //adding the address
-            const label=geo_data["data"][0]["label"];
-            fillAddress(address,label);
-            //initiate weather process with fetched latitude and longitude
-            initiate(latitude,longitude);
-        });
+    //validation
+    if(addressValidation(address)){
+        fetch(`${geocodingApi.baseurlforward}?access_key=${geocodingApi.key}&query=${address}`)
+            .then(jsonCreater =>{
+                return jsonCreater.json();
+            })
+            .then((geo_data) => {
+                //console.log(geo_data);
+                const latitude=geo_data["data"][0]["latitude"];
+                const longitude=geo_data["data"][0]["longitude"];
+                // console.log(`${latitude} ${longitude}`);
+                //adding the address
+                const label=geo_data["data"][0]["label"];
+                fillAddress(address,label);
+                //initiate weather process with fetched latitude and longitude
+                initiate(latitude,longitude);
+            });
+        //empty the input value after showing data
+        document.getElementById("search").value="";
+        // console.log(address);
+    }else{
+        const error=document.getElementById("error");
+        //add error
+        error.innerHTML=`<div class="alert alert-warning alert-dismissible fade show" style="width:100%;" role="alert">
+        <strong>Oops!</strong>  Fill the address First!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>`;
+      var timeout=setTimeout(function(){
+          error.innerHTML="";
+      },5000);
+    }
     // logic function
     return false;
 }
@@ -67,7 +91,7 @@ function initiate(latitude,longitude){
                     return weather.json();
                 })
                 .then((weather) => {
-                    console.log(weather);
+                    //console.log(weather);
                     // call for setting the icon for the weather
                     changeIcon(weather.weather[0].icon);
                     // call for changing weather description

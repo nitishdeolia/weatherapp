@@ -71,7 +71,7 @@ a.links:hover{
     color: black;
 }
 
-.myinput:focus,.myinput:active{
+.myinput:focus,.myinput:active ,button.btn:focus,button.btn:active{
     font-size: 1rem;
     width: 70% !important;
     background: none;
