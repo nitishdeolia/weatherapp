@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="container-fluid pt-5 mt-5">
-            <form onsubmit="return formSubmit()">
+            <form>
                 <div class="form-group form-inline justify-content-center">
                     <input type="text" name="add" id="add" class="form-control myinput"
                         placeholder="Enter your todos here.." autocomplete="off">
@@ -62,19 +62,11 @@
                         </button>
                     </label>
                 </div>
+            </form>
         </div>
     </section>
     <section class="d-flex justify-content-center">
-        <div class="container">
-            <div class="todo-list">
-                <ul>
-                    <li>asfas</li>
-                    <li>asdfas</li>
-                    <li>asdfasdf</li>
-                    <li>asdfasd</li>
-                    <li>sadfasdf</li>
-                </ul>
-            </div>
+        <div class="container todo-list d-flex flex-wrap justify-content-around">
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js" defer></script>
