@@ -3,9 +3,13 @@ var addingitem;
 const todobutton=document.querySelector(".mybutton");
 const todolist=document.querySelector(".todo-list");
 const todoinput=document.querySelector(".myinput");
+
+
+const filtertodo=document.getElementById("todosCheck");
 //for numbering the div added
 var number=1;
 //event listeners
+document.addEventListener("DOMContentLoaded",getTodos);
 
 todobutton.addEventListener('click',(event)=>{
     event.preventDefault();
@@ -25,50 +29,42 @@ todobutton.addEventListener('click',(event)=>{
     </div>`;
 
     todolist.innerHTML+=addingitem;
+    //save local storage
+    saveLocalStorage(todoinput.value);
+    //clear todovalue
     todoinput.value="";
 });
 
-// todobutton.addEventListener('click',(event)=>{
-//     // prevent form from submiting
-//     event.preventDefault();
-//     //create functionality
-//     const tododiv=document.createElement("div");
-//     tododiv.setAttribute("id",`div${number++}`);
-//     tododiv.classList.add("todo-item","shadowclass");
-//     //delete check node
-//     const tododeletecheck=document.createElement("div");
-//     tododeletecheck.classList.add("deletecheck");
-//     //check node
-//     const todoc=document.createElement("button");
-//     todoc.innerHTML=`<i class="fa fa-check"></i>`;
-//     todoc.classList.add("btn","check","px-1");
-//     //append
-//     tododeletecheck.appendChild(todoc);
-//     //delete node
-//     const todod=document.createElement("button");
-//     todod.innerHTML=`<i class="fa fa-times"></i>`;
-//     todod.classList.add("btn","delete","px-1");
-//     //append child
-//     tododeletecheck.appendChild(todod);
-//     //add delete check node to main
-//     tododiv.appendChild(tododeletecheck);
-//     //head tag
-//     const todohead=document.createElement("div");
-//     todohead.classList.add("todohead","text-left","p-3","text-bold");
-//     //p tag
-//     todohead.innerHTML=`<p>${todoinput.value}</p>`;
-//     tododiv.appendChild(todohead);
 
-//     //add head tag
-//     tododiv.appendChild(todohead);
-//     //append to list
-//     todolist.appendChild(tododiv);
+//filter todo
 
-//     todoinput.value="";
-// });
+filtertodo.addEventListener("click",(event)=>{
+    let todos=Array.from(todolist.children);
+    console.log(todos);
+    todos.forEach((todo)=>{
+        if(todo === undefined){
 
-//functions
-    
+        }else{
+            switch(event.target.value){
+                case "all":
+                    todo.style.display = "flex";
+                    break;
+                case "completed":
+                    if(todo.classList.contains("completed")){
+                        todo.style.display = "flex";
+                    }else todo.style.display = "none";
+                    break;
+                case "uncompleted":
+                    if(!todo.classList.contains("completed")){
+                        todo.style.display="flex";
+                    }else todo.style.display = "none";
+                    break;
+            }
+        }
+    })
+})
+
+
 function checkFunction(el){
     const element=el.parentElement.parentElement;
     element.classList.toggle("completed");
@@ -76,27 +72,65 @@ function checkFunction(el){
 
 
 function deleteFunction(el){
-    const tl3=gsap.timeline();
     const element=el.parentElement.parentElement;
-    const elementid=`#${element.getAttribute("id")}`;
-    tl3.set(elementid,{transformOrigin : "100% 0%"})
-    tl3.to(elementid, {
-        duration: 0.5,
-        rotation: -50,
-        ease: "bounce"
-    })
-    .to(elementid, {
-        duration: 0.4,
-        delay : -0.4,
-        y: 10,
-        x : -50,
-        opacity: 0
-    })
-    var timeout=setTimeout(()=>{
+    const elementId=`#${element.getAttribute("id")}`;
+    deleteAnimation(elementId);
+    element.addEventListener("transitionend",()=>{
+        deleteTodosLocalStorage(element);
         element.remove();
-    },600);
+    })
 }
 
+//save local storage
+function saveLocalStorage(todo){
+    let todos;
+    if(localStorage.getItem("todos") === null){
+        todos=[];
+    }else{
+        todos=JSON.parse(localStorage.getItem("todos"));
+    }
+    todos.push(todo);
+    localStorage.setItem("todos",JSON.stringify(todos));
+}
+
+function getTodos(){
+    let todos;
+    if(localStorage.getItem("todos") === null){
+        todos=[];
+    }else{
+        todos=JSON.parse(localStorage.getItem("todos"));
+    }
+    todos.forEach((todo)=>{
+        addingitem=`<div id="div${number++}" class="todo-item shadowclass">
+    <div class="deletecheck">
+    <button onclick="checkFunction(this)" class="btn check px-1">
+    <i class="fa fa-check"></i>
+    </button>
+    <button onclick="deleteFunction(this)" class="btn delete px-1">
+    <i class="fa fa-times"></i>
+    </button>
+    </div>
+    <div class="todohead text-left p-3 text-bold text-wrap">
+    <p>${todo}</p>
+    </div>
+    </div>`;
+
+    todolist.innerHTML+=addingitem;
+    })
+}
+
+function deleteTodosLocalStorage(todo){
+    let todos;
+    if(localStorage.getItem("todos") === null){
+        todos=[];
+    }else{
+        todos=JSON.parse(localStorage.getItem("todos"));
+    }
+    const todoIndex=todo.children[1].children[0].innerText;
+    console.log(todoIndex);
+    todos.splice(todos.indexOf(todoIndex),1);
+    localStorage.setItem("todos",JSON.stringify(todos));
+}
 //animations
 //animation on add button
 const tl=gsap.timeline({paused : true});
@@ -129,4 +163,39 @@ document.querySelector(".addlabel").addEventListener('mouseout',(event)=>{
 document.querySelector(".addlabel").addEventListener('click',(event)=>{
     event.preventDefault();
     tl.play();
+})
+
+
+//function delete animation
+
+function deleteAnimation(elementId){
+    const tl3=gsap.timeline();
+    tl3.set(elementId,{transformOrigin : "100% 0%"})
+    tl3.to(elementId, {
+        duration: 0.5,
+        rotation: -50,
+        ease: "bounce"
+    })
+    .to(elementId, {
+        duration: 0.5,
+        delay : -0.5,
+        opacity: 0
+    })
+}
+
+//text banner animation
+
+const texttl=gsap.timeline();
+texttl.from(".textbanner",{
+    duration : 0.5,
+    y : -30,
+    opacity : 0
+}).to(".textbanner",{
+    duration : 0.5,
+    letterSpacing : "5px",
+    ease : "back"
+}).to(".textbanner",{
+    duration : 0.3,
+    letterSpacing : "0px",
+    ease : "power2.out"
 })
