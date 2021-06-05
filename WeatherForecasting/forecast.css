@@ -9,7 +9,9 @@ body{
     width: 100%;
     min-height: 100vh;
     background: linear-gradient(122.04deg, rgba(0, 0, 0, 0.6) 0%, rgba(255, 255, 255, 0.13) 91.18%);
+    overflow-x: hidden;
 }
+
 
 #logoimg{
     width: 3rem;
@@ -20,9 +22,6 @@ body{
     background: inherit;
 }
 
-.textbanner{
-    letter-spacing: 0px;
-}
 
 input.myinput{
     padding: 0.3rem;
@@ -57,24 +56,30 @@ button.mybutton:focus,button.mybutton:active,.check,.delete,.check:focus,.check:
     box-shadow: none !important;
 }
 
-.todo-item{
-    position: relative;
+.sectionList{
+    display: flex !important;
+    justify-content: center;
+    /* position: relative; */
+}
+
+.show{
+    display: flex !important;
+}
+
+.forecast-list{
+    display: none;
+    /* position: absolute; */
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.forecast-item{
     width: 80%;
     height:100px;
     margin: 1rem !important;
     transition: all 0.3s ease;
+    background-color: pink;
 }
-
-
-.deletecheck{
-    position: absolute;
-    display: block;
-    float: right;
-    top: 0;
-    right: 0;
-    margin: 0.3rem 0.5rem 0 0 !important;
-}
-
 
 .shadowclass {
     box-shadow:
@@ -89,58 +94,56 @@ button.mybutton:focus,button.mybutton:active,.check,.delete,.check:focus,.check:
     padding: 0.5rem !important;
     margin: 100px auto;
     border-radius: 5px;
-  }
+}
 
 
-  .completed{
-      text-decoration: line-through;
-      opacity: 0.3;
-  }
-  
-  select {
-      -webkit-appearance: none !important;
-      -moz-appearance: none !important;
-      appearance: none;
-      outline: none;
-      border: none;
-      width: 10rem;
-      cursor: pointer;
-      padding: 0.6rem !important;
-  }
+.pagelist{
+    width: 100vw;
+}
 
-  .select {
-      position: relative;
-      overflow: hidden;
-  }
+section div.pagelist nav.page{
+    width: 80vw !important;
+}
 
-  .select::after {
-      content: "\25BC";
-      position: absolute;
-      background-color: inherit;
-      color: black;
-      background-color: #D4D4D4;
-      top: 0;
-      right: 0;
-      padding: 0.7rem;
-      pointer-events: none;
-      transition: all 0.3 ease;
-  }
+section div.pagelist nav.page ul{
+    padding: 1rem !important;
+    margin: 1rem !important;
+}
 
-  .select:hover::after {
-      background: rgba(53, 51, 51, 0.747);
-      color: #D4D4D4;
-  }
+section div.pagelist nav.page ul li{
+    text-decoration: none !important;
+    padding: 0rem 0.5rem !important;
+    background-color: inherit;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 0 0.4rem !important;
+    margin: 0 0.5rem !important;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
 
-  /* Media queries */
-  @media only screen and (min-width:768px) {
-      input.myinput {
-          width: 40% !important;
-      }
+section div.pagelist nav.page ul li:hover{
+    color: white;
+    background-color: black !important;
+}
 
-      .todo-item {
-          width: 40%;
-          height: 80px;
-      }
+.activePage{
+    background-color: black !important;
+    color: white;
+}
 
-      /* media queries */
-  }
+@media only screen and (min-width:768px) {
+    input.myinput {
+        width: 40% !important;
+    }
+
+    .forecast-item {
+        width:20%;
+        height: 200px;
+    }
+
+    .sectionList{
+        height: auto;
+    }
+    /* media queries */
+}
