@@ -30,7 +30,7 @@ function autoShowWeather(){
     function showWeather(position){
         const baseLat=position.coords.latitude;
         const baseLong=position.coords.longitude;
-        //initiate(baseLat,baseLong);
+        initiate(baseLat,baseLong);
     }
 }
 
@@ -46,7 +46,7 @@ function formSubmit() {
 
     //get address0
     address = document.getElementById("search").value;
-    console.log(address);
+    // console.log(address);
     //validation
     if(addressValidation(address)){
         fetch(`${geocodingApi.baseurlforward}?access_key=${geocodingApi.key}&query=${address}`)
@@ -67,12 +67,12 @@ function formSubmit() {
     }else{
         const error=document.getElementById("error");
         //add error
-        error.innerHTML=`<div class="alert alert-warning alert-dismissible fade show" style="width:100%;" role="alert">
+        error.innerHTML=`<br><div class="alert alert-warning alert-dismissible fade show" style="width:100%;" role="alert">
         <strong>Oops!</strong>  Fill the address First!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>`;
+      </div><br>`;
       var timeout=setTimeout(function(){
           error.innerHTML="";
       },5000);
@@ -87,11 +87,105 @@ function initiate(latitude,longitude){
             return forecast.json();
         })
         .then((forecast)=>{
-            console.log(forecast);
+            fillAddress(forecast);
+            // console.log(forecast);
+            const timestampList=forecast.list;
+            for(let i=1;i<=5;i++){
+                dayWise(timestampList,i);
+            }
         })
 }
 
+function fillAddress(forecast){
+    const address=document.querySelector(".address");
+    let sunrise_time = new Date(forecast.city.sunrise * 1000);
 
+    // sunset time at the place converted from UTC to normal time
+    let sunset_time = new Date(forecast.city.sunset * 1000);
+    address.innerHTML="";
+    address.innerHTML=`<div class="display-4">${forecast.city.name}</div>
+    <div class="d-block mt-3">
+        <div class="d-flex justify-content-around">
+            <p>Latitude</p>
+            <p>${forecast.city.coord.lat}</p>
+        </div>
+        <div class="d-flex justify-content-around mb-2">
+            <p>Longitude</p>
+            <p>${forecast.city.coord.long}</p>
+        </div>
+        <h6 class="text-center">Sunrise</h6>
+        <div class="d-block text-center mt-2">
+            <p>${sunrise_time}</p>
+        </div>
+        <h6 class="text-center">Sunset</h6>
+        <div class="d-block text-center mt-2">
+            <p>${sunset_time}</p>
+        </div>
+    </div>`;
+
+}
+
+var forecastlist;
+var startIndex,lastIndex;
+
+function dayWise(timestampList,day){
+    if(day==1){
+        forecastlist=document.getElementById("one");
+        startIndex=0;
+        lastIndex=7;
+    }else if(day==2){
+        forecastlist=document.getElementById("two");
+        startIndex=8;
+        lastIndex=15;
+    }else if(day==3){
+        forecastlist=document.getElementById("three");
+        startIndex=16;
+        lastIndex=23;
+    }else if(day==4){
+        forecastlist=document.getElementById("four");
+        startIndex=24;
+        lastIndex=31;
+    }else if(day==5){
+        forecastlist=document.getElementById("five");
+        startIndex=32;
+        lastIndex=39;
+    }
+
+    forecastlist.innerHTML="";
+    for(let start=startIndex;start<=lastIndex;start++){
+        let timeObj=timestampList[start];
+        var addingItem=`<div class="forecast-item shadowclass">
+        <div class="timestamp text-center">
+            <p class="font-weight-bold">${timeObj.dt_txt} hrs</p>
+        </div>
+        <div class="weather d-flex justify-content-around align-items-center mt-1">
+            <p class="lead text-capitalize">${timeObj.weather[0].description}</p>
+            <img src="../icons/${timeObj.weather[0].icon}.png" alt="" class="icon-to-fill">
+        </div>
+        <h6 class="text-center mt-1">Temperature</h6>
+        <div class="d-flex justify-content-around">
+            <p>Feels Like</p>
+            <p id="feelslike">${Math.round((timeObj.main.temp-273.13 + Number.EPSILON) * 100) / 100} C°</p>
+        </div>
+        <div class="d-flex justify-content-around">
+            <p>Temperature</p>
+            <p id="temp">${Math.round((timeObj.main.temp-273.13 + Number.EPSILON) * 100) / 100} C°</p>
+        </div>
+        <div class="d-flex justify-content-around">
+            <p>Humidity</p>
+            <p id="humidity">${timeObj.main.humidity} hPa</p>
+        </div>
+        <div>
+        <h6 class="text-center">Wind Data</h6>
+        <div class="wind d-flex justify-content-around mt-1">
+            <p id="deg">${timeObj.wind.deg}</p>
+            <p id="gust">${timeObj.wind.gust} m/s</p>
+            <p id="speed">${timeObj.wind.speed} m/s</p>
+        </div>
+        </div>`;
+        forecastlist.innerHTML+=addingItem;
+    }
+}
 
 
 //pagination
@@ -160,4 +254,67 @@ pagelist.forEach(page => {
 //get key by value
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
-  }
+}
+
+
+//animations
+const tl=gsap.timeline({paused : true});
+//animations
+tl.to("#icon",{
+    duration: 0.3,
+    rotation : 360,
+    ease : "power4.out",
+    color : "white"
+}).to(".addlabel",{
+    duration : 0.3,
+    delay : -0.3,
+    backgroundColor: "grey",
+    border : 0,
+    ease : "power3.out"
+})
+
+document.querySelector(".addlabel").addEventListener('mouseover',(event)=>{
+    event.preventDefault();
+    tl.play();
+});
+
+document.querySelector(".addlabel").addEventListener('mouseout',(event)=>{
+    event.preventDefault();
+    tl.reverse();
+})
+
+
+//adding address div
+const tl1=gsap.timeline();
+
+tl1.to(".address",{
+    duration : 0.7,
+    x : -50,
+    opacity : 0.5
+})
+
+document.querySelector(".address").addEventListener('mouseover',(event)=>{
+    event.preventDefault();
+    tl1.reverse();
+});
+
+document.querySelector(".address").addEventListener('mouseout',(event)=>{
+    event.preventDefault();
+    tl1.play();
+})
+
+//stagger animation
+const texttl=gsap.timeline();
+texttl.from(".textbanner",{
+    duration : 0.5,
+    y : -30,
+    opacity : 0
+}).to(".textbanner",{
+    duration : 0.5,
+    letterSpacing : "5px",
+    ease : "back"
+}).to(".textbanner",{
+    duration : 0.3,
+    letterSpacing : "0px",
+    ease : "power2.out"
+})

@@ -24,7 +24,7 @@
                 aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end mr-1" id="mynavbar">
+            <div class="collapse navbar-collapse justify-content-md-end mr-1" id="mynavbar">
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item px-2">
                         <a class="nav-link links" href="../index.html">Current Weather <span
@@ -34,7 +34,7 @@
                         <a class="nav-link links" href="forecast.html">Forecast<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item px-2">
-                        <a class="nav-link links" href="../ToDos/todo.html">Your forecasts<span class="sr-only">(current)</span></a>
+                        <a class="nav-link links" href="../ToDos/todo.html">Your ToDos<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item px-2">
                         <a class="nav-link links" href="../AboutUs/about.html">About us <span
@@ -63,59 +63,32 @@
                     </label>
                 </div>
             </form>
-            <div class="error"></div>
+            <div class="m-auto" style="width:60%;" id="error"></div>
         </div>
     </section>
+    <div class="address shadowclass">
+        <div class="display-4">London</div>
+        <div class="d-block">
+            <div class="d-flex justify-content-around">
+                <p>Latitude</p>
+                <p></p>
+            </div>
+            <div class="d-flex justify-content-around">
+                <p>Longitude</p>
+                <p></p>
+            </div>
+        </div>
+    </div>
     <section class="sectionList">
-        <div class="container forecast-list" id="one">
-            <div class="forecast-item">first</div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
+        <div class="container forecast-list" id="one"> 
         </div>
         <div class="container forecast-list" id="two">
-            <div class="forecast-item">second</div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
         </div>
         <div class="container forecast-list" id="three">
-            <div class="forecast-item">third</div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
         </div>
         <div class="container forecast-list" id="four">
-            <div class="forecast-item">fourth</div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
         </div>
         <div class="container forecast-list" id="five">
-            <div class="forecast-item">fifth</div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
-            <div class="forecast-item"></div>
         </div>
     </section>
     <section>
