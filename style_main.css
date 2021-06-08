@@ -11,6 +11,10 @@ body{
     background: #E5E5E5;
 }
 
+body::-webkit-scrollbar{
+    display: none;
+}
+
 a.links{
     color: black;
 } 

@@ -9,6 +9,10 @@ body{
     background: #E5E5E5;
 }
 
+body::-webkit-scrollbar{
+    display: none;
+}
+
 #logoimg{
     width: 3rem;
     height: 3rem;

@@ -129,6 +129,10 @@ section div.pagelist nav.page ul li:hover{
     background-color: black !important;
 }
 
+body::-webkit-scrollbar{
+    display: none;
+}
+
 .activePage{
     background-color: black !important;
     color: white;
